@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+    <style>
+        table, td {
+            border: 1px solid black;
+        }
+    </style>
+    <title>Title</title>
+</head>
+<body>
+
+<div id="div1"><h2>Aqui se muestran los datos de la tabla</h2></div>
+<table id="myTable">
+    <tr>
+        <td>Row1 cell1</td>
+        <td>Row1 cell2</td>
+        <td>Row1 cell2</td>
+    </tr>
+    <tr>
+        <td>Row2 cell1</td>
+        <td>Row2 cell2</td>
+        <td>Row1 cell2</td>
+    </tr>
+    <tr>
+        <td>Row3 cell1</td>
+        <td>Row3 cell2</td>
+        <td>Row1 cell2</td>
+    </tr>
+</table>
+<br>
+
+<button type="button" onclick="myFunction()">mostrarDatos</button>
+
+<script>
+    $(document).ready(function(){
+        $("button").click(function(){
+            $.ajax({ //usamos ajax llamar al servicioWeb
+                type: "GET",
+                uri: 'CategoryService/FindAll',
+                dataType: 'aplication/json',
+                success: function (result) {
+                    var table = document.getElementById("myTable");
+                    $.each(result, function(i, obj) { //i : los indices del arreglo,obj es la lista de datos de cada arreglo.
+                        alert(obj.name);
+                        var row = table.insertRow(0);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        var cell2 = row.insertCell(2);
+                        cell1.innerHTML = obj.id;
+                        cell2.innerHTML = obj.name;
+                        cell3.innerHTML = obj.description;
+                    });
+                }
+            });
+        });
+    });
+
+</script>
+
+</body>
+</html>
